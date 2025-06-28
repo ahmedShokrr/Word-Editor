@@ -1,18 +1,15 @@
 package wordeditor.core;
 
-import wordeditor.utils.Search;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.nio.file.*;
 
 /**
  * Dictionary management with concurrent loading and caching
  * Demonstrates file I/O and thread-safe operations
  */
 public class DictionaryManager {
-    private static final String DEFAULT_DICTIONARY = "resources/dictionary.txt";
-    private static final String FALLBACK_DICTIONARY = "resources/basic_words.txt";
+    private static final String DICTIONARY_FILE = "dictionary.txt";
 
     private final Set<String> words = ConcurrentHashMap.newKeySet();
     private volatile boolean loaded = false;
@@ -34,7 +31,7 @@ public class DictionaryManager {
                 return; // Double-check
 
             try {
-                loadFromFile(getClass().getClassLoader().getResourceAsStream("dictionary.txt"));
+                loadFromFile(getClass().getClassLoader().getResourceAsStream(DICTIONARY_FILE));
             } catch (Exception e) {
                 System.out.println("Loading fallback dictionary...");
                 loadFallbackDictionary();
